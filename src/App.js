@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from "react-redux";
 
-function App() {
+import * as ActionCreators from "./actions"
+
+function App(props) {
+  const {count, step, incrementDispatch,decrementDispatch,setStepDispatch}= props;
+ 
+  const handlerInput =({target:{value}}) => setStepDispatch(Number(value))
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h2>count: {count}</h2>
+      <button onClick={incrementDispatch}>+</button>
+      <button onClick={decrementDispatch}>-</button>
+      <input type="number" value={step} onChange={handlerInput}/>
+    </>
   );
 }
 
-export default App;
+
+//function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
+const mapStateToProps =(state) => state;
+const mapDispatchToProps = (dispatch)=>({
+    incrementDispatch : ()=> dispatch(ActionCreators.increment()),
+    decrementDispatch : ()=> dispatch(ActionCreators.decrement()),
+    setStepDispatch : (newStep)=> dispatch(ActionCreators.setStep(newStep)),
+})
+// const WithProps = connect(mapStateToProps);
+// const AppWithProps = WithProps(App);
+
+export default connect (mapStateToProps, mapDispatchToProps)(App)
