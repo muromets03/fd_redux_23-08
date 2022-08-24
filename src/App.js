@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 
-import * as ActionCreators from "./actions"
+import * as ActionCreators from "./actions/actionsCounter"
 
 function App(props) {
+  //console.log(props)
   const {count, step, incrementDispatch,decrementDispatch,setStepDispatch}= props;
  
   const handlerInput =({target:{value}}) => setStepDispatch(Number(value))
@@ -20,7 +21,8 @@ function App(props) {
 
 
 //function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
-const mapStateToProps =(state) => state;
+const mapStateToProps =({count,step}) => ({count,
+step})
 const mapDispatchToProps = (dispatch)=>({
     incrementDispatch : ()=> dispatch(ActionCreators.increment()),
     decrementDispatch : ()=> dispatch(ActionCreators.decrement()),
